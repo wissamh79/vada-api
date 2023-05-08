@@ -21,24 +21,23 @@ const getEvent = async (req, res) => {
   res.status(StatusCodes.OK).json({ event });
 };
 const createEvent = async (req, res) => {
-  const { name, image, price } = req.body;
-  if (name && image && price === null) {
+  const { name, image } = req.body;
+  if (name && image === null) {
     throw new BadRequestError("this  field can't be empty");
   }
   const event = await Events.create({
     name,
     image,
-    price,
   });
   res.status(StatusCodes.CREATED).json({ event });
 };
 const updateEvent = async (req, res) => {
   const {
-    body: { name, image, price },
+    body: { name, image },
 
     params: { id: eventId },
   } = req;
-  if (name && image && price === null) {
+  if (name && image === null) {
     throw new BadRequestError("this  field can't be empty");
   }
   const event = await Events.findByIdAndUpdate({ _id: eventId }, req.body, {
